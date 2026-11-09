@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import HeroPrint from "./HeroPrint";
 import OrderSlip from "./OrderSlip";
 import CropMarks from "./CropMarks";
+import MobileMenu from "./MobileMenu";
 
 const FACEBOOK = "https://www.facebook.com/renswashie.acunabelga";
 const EMAIL = "rensacuna1@gmail.com";
@@ -120,9 +121,12 @@ export default function Home() {
               </li>
             ))}
           </ul>
-          <a href="#order" className="group flex items-center gap-2 bg-brand px-4 py-2.5 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-brand-hot">
+          <div className="flex items-center gap-2">
+          <a href="#order" className="group hidden items-center gap-2 bg-brand px-4 py-2.5 sm:flex font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-brand-hot">
             Order slip <Arrow className="h-4 w-4 transition group-hover:translate-x-0.5" />
           </a>
+          <MobileMenu />
+          </div>
         </nav>
       </header>
 
@@ -130,12 +134,12 @@ export default function Home() {
         {/* ============ HERO ============ */}
         <section className="heat relative">
           <div aria-hidden className="halftone fade-l pointer-events-none absolute inset-y-0 left-0 w-1/2 text-paper/[0.07]" />
-          <div className="relative mx-auto grid max-w-7xl gap-12 px-5 pb-16 pt-14 lg:grid-cols-12 lg:items-center lg:pt-20">
+          <div className="relative mx-auto grid max-w-7xl gap-12 px-5 pb-12 pt-10 sm:pb-16 sm:pt-14 lg:grid-cols-12 lg:items-center lg:pt-20">
             <div className="lg:col-span-7">
               <Label className="text-paper/50">
                 [ Job 001 <span className="text-brand">/</span> Custom print ]
               </Label>
-              <h1 className="mt-6 font-display uppercase leading-[0.86] tracking-[-0.01em] text-[clamp(3.4rem,9vw,7.6rem)]">
+              <h1 className="mt-6 font-display uppercase leading-[0.9] tracking-[-0.01em] text-[clamp(3.4rem,9vw,7.6rem)]">
                 We press
                 <br />
                 <span className="text-brand">ideas</span> into
@@ -188,7 +192,7 @@ export default function Home() {
         {/* ============ MENU (paper) ============ */}
         <section id="menu" className="relative bg-paper text-ink">
           <div aria-hidden className="halftone fade-r pointer-events-none absolute right-0 top-0 h-80 w-1/2 text-brand/25" />
-          <div className="relative mx-auto max-w-7xl px-5 py-24">
+          <div className="relative mx-auto max-w-7xl px-5 py-16 sm:py-24">
             <div className="grid gap-8 md:grid-cols-12 md:items-end">
               <div className="md:col-span-8">
                 <Label className="text-brand">01 — The menu</Label>
@@ -203,24 +207,24 @@ export default function Home() {
               </p>
             </div>
 
-            <ul className="mt-16 border-t-2 border-ink">
+            <ul className="mt-10 border-t-2 border-ink sm:mt-16">
               {menu.map((m, i) => (
                 <li key={m.name} className="menu-row border-b border-ink/20 hover:text-white">
-                  <a href="#order" className="grid grid-cols-[auto_1fr_auto] items-center gap-x-5 gap-y-2 px-2 py-6 sm:px-4 md:grid-cols-[3rem_3.5rem_minmax(0,1.1fr)_minmax(0,1.3fr)_auto_2rem] md:gap-x-6">
+                  <a href="#order" className="grid grid-cols-[auto_1fr_auto] items-center gap-x-5 gap-y-2 px-2 py-6 sm:px-4 lg:grid-cols-[3rem_3.5rem_minmax(0,1.1fr)_minmax(0,1.3fr)_auto_2rem] lg:gap-x-6">
                     <span className="font-mono text-xs text-ink/40 transition-colors [.menu-row:hover_&]:text-white/60">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span className="row-ico hidden text-brand md:block [.menu-row:hover_&]:text-white">{m.icon}</span>
+                    <span className="row-ico hidden text-brand lg:block [.menu-row:hover_&]:text-white">{m.icon}</span>
                     <span className="font-display text-3xl uppercase leading-none sm:text-4xl">{m.name}</span>
-                    <span className="col-span-3 text-[15px] leading-relaxed text-ink/65 md:col-span-1 [.menu-row:hover_&]:text-white/85">{m.desc}</span>
-                    <span className="col-span-3 flex flex-wrap gap-2 md:col-span-1">
+                    <span className="col-span-3 max-w-xl text-[15px] leading-relaxed text-ink/65 lg:col-span-1 [.menu-row:hover_&]:text-white/85">{m.desc}</span>
+                    <span className="col-span-3 flex flex-wrap gap-2 lg:col-span-1">
                       {m.tags.map((t) => (
                         <span key={t} className="border border-current px-2 py-1 font-mono text-[10px] uppercase tracking-[0.15em] opacity-70">
                           {t}
                         </span>
                       ))}
                     </span>
-                    <span className="row-arrow col-start-3 row-start-1 justify-self-end md:col-start-auto md:row-start-auto">
+                    <span className="row-arrow col-start-3 row-start-1 justify-self-end lg:col-start-auto lg:row-start-auto">
                       <Arrow />
                     </span>
                   </a>
@@ -232,7 +236,7 @@ export default function Home() {
 
         {/* ============ PROCESS (tickets) ============ */}
         <section id="process" className="relative bg-ink">
-          <div className="mx-auto max-w-7xl px-5 py-24">
+          <div className="mx-auto max-w-7xl px-5 py-16 sm:py-24">
             <div className="grid gap-6 md:grid-cols-2 md:items-end">
               <div>
                 <Label className="text-brand">02 — The process</Label>
@@ -249,7 +253,7 @@ export default function Home() {
               </p>
             </div>
 
-            <ol className="mt-16 flex flex-col gap-4 lg:flex-row lg:gap-0">
+            <ol className="mt-10 flex flex-col sm:mt-16 gap-4 lg:flex-row lg:gap-0">
               {steps.map((s, i) => (
                 <li key={s.t} className="flex flex-1 lg:items-stretch">
                   <div className="ticket relative flex flex-1 flex-col px-8 pb-8 pt-6">
@@ -281,7 +285,7 @@ export default function Home() {
         {/* ============ PROMISES + OCCASIONS ============ */}
         <section className="heat relative border-t border-paper/10">
           <div aria-hidden className="halftone fade-b pointer-events-none absolute inset-x-0 bottom-0 h-64 text-brand/30" />
-          <div className="relative mx-auto grid max-w-7xl gap-16 px-5 py-24 lg:grid-cols-2">
+          <div className="relative mx-auto grid max-w-7xl gap-16 px-5 py-16 sm:py-24 lg:grid-cols-2">
             <div>
               <Label className="text-brand">Shop rules</Label>
               <ul className="mt-8 divide-y divide-paper/10 border-y border-paper/10">
@@ -328,7 +332,7 @@ export default function Home() {
 
         {/* ============ ORDER ============ */}
         <section id="order" className="relative bg-ink">
-          <div className="mx-auto grid max-w-7xl gap-14 px-5 py-24 lg:grid-cols-12 lg:items-start">
+          <div className="mx-auto grid max-w-7xl gap-14 px-5 py-16 sm:py-24 lg:grid-cols-12 lg:items-start">
             <div className="lg:col-span-5 lg:sticky lg:top-28">
               <Label className="text-brand">03 — Order</Label>
               <h2 className="mt-4 font-display text-[clamp(3rem,7vw,6rem)] uppercase leading-[0.9]">
