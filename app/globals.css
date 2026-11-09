@@ -1,26 +1,151 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #0d0b0a;
+  --ink-2: #161311;
+  --paper: #efe8dc;
+  --paper-2: #e4dccd;
+  --red: #e11d2e;
+  --red-hot: #ff3d3d;
+  --red-deep: #5e0710;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-brand: var(--red);
+  --color-brand-hot: var(--red-hot);
+  --color-brand-deep: var(--red-deep);
+  --font-display: var(--font-anton), "Impact", sans-serif;
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-sans);
+}
+
+::selection { background: var(--red); color: #fff; }
+
+/* Paper grain over the whole page */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Heat-plate gradient: black fading into deep red, like a press warming up */
+.heat {
+  background:
+    radial-gradient(120% 70% at 85% 110%, rgba(225, 29, 46, 0.55) 0%, rgba(94, 7, 16, 0.45) 35%, transparent 70%),
+    linear-gradient(180deg, var(--ink) 0%, #120a0a 100%);
+}
+
+/* Halftone dots, faded with a mask */
+.halftone {
+  background-image: radial-gradient(circle, currentColor 1.1px, transparent 1.4px);
+  background-size: 9px 9px;
+}
+.fade-l { mask-image: linear-gradient(90deg, #000 0%, transparent 75%); }
+.fade-r { mask-image: linear-gradient(270deg, #000 0%, transparent 75%); }
+.fade-b { mask-image: linear-gradient(0deg, #000 0%, transparent 85%); }
+
+/* Printer's crop marks (used by <CropMarks/>) */
+.crop { position: absolute; width: 18px; height: 18px; pointer-events: none; }
+.crop::before, .crop::after { content: ""; position: absolute; background: currentColor; }
+.crop::before { width: 100%; height: 1px; top: 50%; }
+.crop::after { height: 100%; width: 1px; left: 50%; }
+.crop-tl { top: -9px; left: -9px; }
+.crop-tr { top: -9px; right: -9px; }
+.crop-bl { bottom: -9px; left: -9px; }
+.crop-br { bottom: -9px; right: -9px; }
+
+/* Text outline for big display type */
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--paper);
+  paint-order: stroke fill;
+}
+
+/* Infinite marquee */
+@keyframes marquee { to { transform: translateX(-50%); } }
+.marquee { animation: marquee 32s linear infinite; }
+
+/* Menu rows: red ink sweeps in on hover */
+.menu-row { position: relative; isolation: isolate; }
+.menu-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, var(--red) 0%, var(--red-deep) 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(.7, 0, .2, 1);
+}
+.menu-row:hover::before, .menu-row:focus-within::before { transform: scaleX(1); }
+.menu-row .row-ico { transition: transform 0.45s cubic-bezier(.7, 0, .2, 1), opacity 0.3s; }
+.menu-row:hover .row-ico { transform: rotate(-8deg) scale(1.08); }
+.menu-row .row-arrow { transition: transform 0.45s cubic-bezier(.7, 0, .2, 1); }
+.menu-row:hover .row-arrow { transform: translateX(6px) rotate(-45deg); }
+
+/* Ticket stubs with punched notches between them */
+.ticket {
+  background: var(--paper);
+  color: var(--ink);
+  mask:
+    radial-gradient(circle 11px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 11px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+}
+.perf-v { background-image: linear-gradient(var(--ink) 50%, transparent 0); background-size: 1px 9px; width: 1px; }
+
+/* Rubber stamp */
+.stamp {
+  border: 3px solid var(--red);
+  color: var(--red);
+  mix-blend-mode: multiply;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='s'%3E%3CfeTurbulence baseFrequency='.55' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 1.7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
+}
+
+/* Receipt with a torn zigzag bottom edge */
+.receipt {
+  background: var(--paper);
+  color: var(--ink);
+  --zz: 14px;
+  mask:
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / var(--zz) 51% repeat-x,
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--zz) / 2) no-repeat;
+}
+
+/* Form fields drawn like blanks on an order slip */
+.slip-field {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1.5px solid rgba(13, 11, 10, 0.35);
+  padding: 6px 0 8px;
+  font-size: 1.05rem;
+  color: var(--ink);
+  outline: none;
+  border-radius: 0;
+  transition: border-color 0.2s;
+}
+.slip-field:focus { border-color: var(--red); }
+.slip-field::placeholder { color: rgba(13, 11, 10, 0.35); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee { animation: none; }
+  .menu-row::before, .menu-row .row-ico, .menu-row .row-arrow { transition: none; }
 }
